@@ -44,6 +44,7 @@ public class SupplierCurdTest {
         supplier.setStatus(1);
 
         // 执行自增
+        // 单表的新增 => mapper 继承 BaseMapper<T> 即可
         int rows = supplierMapper.insert(supplier);
         assertEquals(1, rows);
         System.out.println("新增成功，MP 自动生成的雪花 ID 为: " + supplier.getId());
@@ -56,6 +57,7 @@ public class SupplierCurdTest {
         String supplierName = "半导体";
         Integer status = 1;
 
+        // 单表多条件查询，最好使用条件构造器 LambdaQueryWrapper/QueryWrapper
         // 构建查询条件对象 LambdaQueryWrapper
         LambdaQueryWrapper<Supplier> queryWrapper = new LambdaQueryWrapper<>();
         // 1.等值查询（eq） => 条件是 status != null 时才会触发
