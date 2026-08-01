@@ -3,6 +3,7 @@ package com.example.mpstudy.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -22,7 +23,10 @@ public class Warehouse implements Serializable {
     private String warehouseName;
 
     private String location;
-
+    /**
+     * 乐观锁注解：MP 会自动在更新时自动拼接 WHERE version = ? 并自动将 version + 1
+     */
+    @Version
     private Integer capacity;
 
     private LocalDateTime createdAt;
