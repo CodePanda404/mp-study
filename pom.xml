@@ -56,6 +56,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Spring Boot 开发工具包（热部署） -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<!-- optional=true 表示依赖不会传递给引用当前项目的其他模块 -->
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>
