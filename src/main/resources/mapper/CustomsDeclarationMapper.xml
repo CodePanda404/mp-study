@@ -4,7 +4,30 @@
 
 <mapper namespace="com.example.mpstudy.mapper.CustomsDeclarationMapper">
 
-    <select id="selectDeclarationPage" resultType="com.example.mpstudy.vo.DeclarationDetailVO">
+    <select id="selectDeclarationPageA" resultType="com.example.mpstudy.vo.DeclarationDetailVO">
+        SELECT
+        d.id,
+        d.declaration_no as declarationNo,
+        d.status,
+        d.total_amount as totalAmount,
+        d.currency,
+        d.created_at as createdAt,
+        -- 联查供应商表
+        s.supplier_code AS supplierCode,
+        s.supplier_name AS supplierName,
+        s.contact_person AS contactPerson,
+        -- 联查保税仓库表
+        w.warehouse_code AS warehouseCode,
+        w.warehouse_name AS warehouseName,
+        w.location
+        FROM biz_customs_declaration d
+        LEFT JOIN sys_supplier s ON d.supplier_id = s.id
+        LEFT JOIN sys_warehouse w ON d.warehouse_id = w.id
+        <!-- 核心魔法：${ew.customSqlSegment} 会自动解析并替换 Java 端构建的 WHERE 条件和 ORDER BY -->
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectDeclarationPageB" resultType="com.example.mpstudy.vo.DeclarationDetailVO">
         SELECT
             d.id,
             d.declaration_no as declarationNo,
@@ -23,7 +46,14 @@
         FROM biz_customs_declaration d
         LEFT JOIN sys_supplier s ON d.supplier_id = s.id
         LEFT JOIN sys_warehouse w ON d.warehouse_id = w.id
-        <!-- 核心魔法：${ew.customSqlSegment} 会自动解析并替换 Java 端构建的 Where 条件 和 ORDER BY -->
-        ${ew.customSqlSegment}
+        <where>
+            <if test="declarationNo != null and declarationNo != ''">
+                AND d.declaration_no = #{declarationNo}
+            </if>
+            <if test="status != null and status != ''">
+                AND d.status = #{status}
+            </if>
+        </where>
+        ORDER BY d.created_at DESC
     </select>
 </mapper>
