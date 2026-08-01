@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mp-study
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mp_study?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+# MyBatis-Plus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml # ?? XML ??????
+  type-aliases-package: com.example.mpstudy.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # ?? SQL
+    map-underscore-to-camel-case: true # ????????
+  global-config:
+    db-config:
+      id-type: assign_id # ?????? ID
