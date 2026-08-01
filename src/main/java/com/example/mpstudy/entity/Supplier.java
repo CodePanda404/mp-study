@@ -20,6 +20,6 @@ public class Supplier implements Serializable {
     private String phone;
     // 0-禁用 1-启用
     private Integer status;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
 }
